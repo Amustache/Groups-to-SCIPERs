@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Groups to SCIPERs</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <main class="flex-shrink-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="mt-5">Groups to SCIPERs</h1>
+            <p class="lead">Auto extract SCIPERs from EPFL Groups to use in EPFL WordPress.</p>
+            <ol>
+              <li>Go to groups.epfl.ch, open the page of your group, and saved it as a "HTML only".</li>
+              <li>Upload that file here, under "HTML webpage".</li>
+              <li>Select if you wish to remove admins SCIPERs. Add more SCIPERs to remove if needed.</li>
+              <li>Press "Upload".</li>
+            </ol>
+            <form method=post enctype=multipart/form-data>
+              <div class="form-group row mb-2">
+                <label for="file" class="col-sm-2 col-form-label">HTML webpage</label>
+                <div class="col-sm-10">
+                  <input type="file" class="form-control-file" id="file" name="file" accept=".htm,.html,text/html">
+                </div>
+              </div>
+
+              <div class="form-group row mb-2">
+                <div class="col-sm-2">Administrators</div>
+                <div class="col-sm-10">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remove_admins" name="remove_admins" checked>
+                    <label class="form-check-label" for="remove_admins">Remove admins from group</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-2">
+                <label for="filters" class="col-sm-2 col-form-label">SCIPERs to remove</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="filters" name="filters" aria-describedby="filters_help" value="{{default_scipers}}">
+                  <small id="filters_help" class="form-text text-muted">Default: {{default_scipers_names}}.</small>
+                </div>
+              </div>
+
+              <fieldset class="form-group mb-2">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">Sorting order</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="sorting" id="ascending" value="ascending" checked>
+                      <label class="form-check-label" for="ascending">Ascending order (oldest SCIPER first)</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="sorting" id="descending" value="descending">
+                      <label class="form-check-label" for="descending">Descending order (newest SCIPER first)</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="sorting" id="random" value="random">
+                      <label class="form-check-label" for="random">Random</label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{category}} mt-5" role="alert">
+                    {{message|safe}}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </body>
+</html>
